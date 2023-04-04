@@ -1,10 +1,12 @@
 import { Component} from '@angular/core';
-      
+       
 @Component({
     selector: 'app-root',
-    template: `<child-comp [name]="name"></child-comp>
-                <input type="text" [(ngModel)]="name" />`
+    template: `<child-comp>
+                    <h3 #headerContent>Добро пожаловать {{name}}!</h3>
+               </child-comp>`
 })
-export class AppComponent{ 
-     name:string="Tom";
+export class AppComponent { 
+ 
+    name: string = "Tom";
 }

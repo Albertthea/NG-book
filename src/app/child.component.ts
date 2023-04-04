@@ -1,58 +1,19 @@
-import { Component, 
-    Input, 
-    OnInit,
-    DoCheck,
-    OnChanges,
-   AfterContentInit, 
-   AfterContentChecked, 
-   AfterViewChecked, 
-   AfterViewInit} from '@angular/core';
- 
+import { Component, ContentChild, ElementRef } from '@angular/core';
+       
 @Component({
-selector: 'child-comp',
-template: `<p>Привет {{name}}</p>`
+    selector: 'child-comp',
+    template: `<ng-content></ng-content>
+               <button (click)="change()">Изменить</button>`
 })
-export class ChildComponent implements OnInit,
-    DoCheck,
-    OnChanges,
-   AfterContentInit, 
-   AfterContentChecked, 
-   AfterViewChecked, 
-   AfterViewInit  { 
-@Input() name: string = "";
-count:number = 1;
-
-ngOnInit() {
-  
- this.log(`ngOnInit`);
-}
-ngOnChanges() {
-  
- this.log(`OnChanges`);
-}
-ngDoCheck() {
-  
- this.log(`ngDoCheck`);
-}
-ngAfterViewInit() {
-  
- this.log(`ngAfterViewInit`);
-}
-ngAfterViewChecked() {
-  
- this.log(`ngAfterViewChecked`);
-}
-ngAfterContentInit() {
-  
- this.log(`ngAfterContentInit`);
-}
-ngAfterContentChecked() {
-  
- this.log(`ngAfterContentChecked`);
-}
-
-private log(msg: string) {
-   console.log(this.count + ". " + msg);
-   this.count++;
-}
+export class ChildComponent{ 
+      
+    @ContentChild("headerContent", {static:false})
+    header: ElementRef|undefined;
+      
+    change() { 
+        if(this.header !==undefined){
+            console.log(this.header); 
+            this.header.nativeElement.textContent = "Hello to world!"; 
+        }
+    }
 }
