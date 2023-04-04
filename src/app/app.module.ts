@@ -1,14 +1,11 @@
-import { NgModule } from '@angular/core';
+import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
-import { ChildComponent } from './child.component';
-
+import { AppComponent }   from './app.component';
+import { DataModule }   from './data/data.module';
+   
 @NgModule({
-  declarations: [AppComponent, ChildComponent],
-  imports: [BrowserModule, FormsModule],
-  providers: [],
-  bootstrap: [AppComponent], //указывает какой компонент главный и загружается первым
+    imports:      [ BrowserModule, DataModule],
+    declarations: [ AppComponent],
+    bootstrap:    [ AppComponent ]
 })
-export class AppModule {}
+export class AppModule { }
