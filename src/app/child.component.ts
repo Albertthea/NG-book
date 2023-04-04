@@ -1,11 +1,24 @@
-import { Component } from '@angular/core';
-
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+      
 @Component({
     selector: 'child-comp',
-    template: `<ng-content></ng-content>
-                <p>Привет {{name}}</p>`,
-    styles: [`h2, p {color:navy;}`]
+    template: `<p>Привет {{name}}</p>`
 })
-export class ChildComponent {
-  name = 'Евгений';
+export class ChildComponent implements OnInit, OnChanges { 
+    @Input() name: string = "";
+ 
+    constructor(){ this.log(`constructor`); }
+    ngOnInit() { this.log(`onInit`); }
+     
+    ngOnChanges(changes: SimpleChanges) {
+      for (let propName in changes) {
+        let chng = changes[propName];
+        let cur  = JSON.stringify(chng.currentValue);
+        let prev = JSON.stringify(chng.previousValue);
+        this.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+      }
+    }
+    private log(msg: string) {
+        console.log(msg);
+    }
 }

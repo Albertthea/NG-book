@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
-
-class Item {
-  purchase: string;
-  done: boolean;
-  price: number;
-
-  constructor(purchase: string, price: number) {
-    this.purchase = purchase;
-    this.price = price;
-    this.done = false;
-  }
-}
-
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
+       
 @Component({
-  selector: 'app-root',
-  template: `<child-comp><h2>Добро пожаловать {{name}}!</h2></child-comp>`,
-  styles: [`h2, p {color:#333;}`]
+    selector: 'app-root',
+    template: `<child-comp [name]="name"></child-comp>
+                <input type="text" [(ngModel)]="name" />
+                <input type="number" [(ngModel)]="age" />`
 })
-export class AppComponent {
-  name = 'Tom';
+export class AppComponent implements OnChanges { 
+    name:string="Tom";
+    age:number = 25;
+    ngOnChanges(changes: SimpleChanges) {
+      for (let propName in changes) {
+        let chng = changes[propName];
+        let cur  = JSON.stringify(chng.currentValue);
+        let prev = JSON.stringify(chng.previousValue);
+        this.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+      }
+    }
+ 
+    private log(msg: string) {
+        console.log(msg);
+    }
 }
